@@ -37,12 +37,12 @@ devtools::install_github("KarlRopkins/alignment")
 
 ## Cheat Sheet
 
-<a href="reference/figures/alignment_cheatsheet.pdf"><img src="figures/alignment_cheatsheet_thumb.png" width="330" height="252"/></a>
+<a href="reference/figures/alignment_cheatsheet.pdf"><img src="man/figures/alignment_cheatsheet_thumb.png" width="330" height="252"/></a>
 
 
 ## Contributing
 **alignment** is an in-development package, and contributions are very welcome. We are using tidyverse contribution guidance regarding code of conduct but are not strict as them regarding coding style...  [Contributions](https://karlropkins.github.io/alignment/CONTRIBUTING.html)   
 
-## License
+## License 
 [GPL-3](https://karlropkins.github.io/alignment/LICENSE.html)
 
