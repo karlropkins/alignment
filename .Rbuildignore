@@ -9,6 +9,7 @@
 ^_alignment.yml$
 ^\.github$
 ^doc$
+^docs$
 ^Meta$
 ^vignettes/articles$
 ^man/figures$
