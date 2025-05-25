@@ -1,0 +1,17 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^.Rhist$
+^README\.Rmd$
+^INDEX\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^_alignment.yml$
+^\.github$
+^doc$
+^Meta$
+^vignettes/articles$
+^man/figures$
+^LICENSE\.md$
+
+^CODE_OF_CONDUCT\.md$
