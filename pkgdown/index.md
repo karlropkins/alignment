@@ -26,7 +26,7 @@ devtools::install_github("KarlRopkins/alignment")
 
 ## Cheat Sheet
 
-<a href="reference/figures/alignment_cheatsheet.pdf"><img src="reference/figures/align_cheatsheet_thumb.png" width="330" height="252"/></a>
+<a href="reference/figures/alignment_cheatsheet.pdf"><img src="man/figures/alignment_cheatsheet_thumb.png" width="330" height="252"/></a>
 
 ## Contributing
 
