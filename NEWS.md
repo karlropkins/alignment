@@ -1,14 +1,12 @@
-# alignment version 0.0
+# align/alignment version 0.0
 
-* Package releases 
+* Package releases as **alignment** 
 
     * __v.0.0.8__ [2025-05-25] renamed package alignment and made associated 
     archives because align name in-use on CRAN and aiming to submit this to CRAN 
     this year); leaving align archive as-is because package still in use.  
 
-# align version 0.0
-
-* Package releases 
+* Package releases as **align**
 
     * __v.0.0.7__ [2025-05-22] package build update (obviously been a while). 
 
