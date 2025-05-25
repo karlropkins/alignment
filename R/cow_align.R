@@ -57,6 +57,16 @@
 #other ...align functions
 ###############################
 
+
+###############################
+#to fix 
+###############################
+# I think this should work!!! 
+#     cow_align(iris, by=c("Sepal.Length", "Sepal.Width"), 4, 2)
+#     NO: it is doing.. cow_align(iris, by=c("Sepal.Length", "Sepal.Width"), y = 4, seg=2)
+#         need..        cow_align(iris, by=c("Sepal.Length", "Sepal.Width"), seg=4, slack=2)
+
+
 ###############################
 #to do
 ###############################
