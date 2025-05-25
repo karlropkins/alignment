@@ -26,7 +26,7 @@ aligned data.
 
 You can install the development version of **alignment** from [GitHub](https://github.com/). 
 
-(As well as `R`, the package also includes some `c++` code. So, if you have not used similar before you may need to install a compiler, for example [Rtools](https://cran.r-project.org/bin/windows/Rtools/) if you are using Windows).
+(As well as `R`, the package also includes some `c++` code. So, if you have not used similar before you may need to install a compiler, for example [Rtools](https://cran.r-project.org/bin/windows/Rtools/) if you are using Windows). 
 
 
 ```{r install, eval=FALSE}
