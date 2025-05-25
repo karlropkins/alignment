@@ -12,5 +12,5 @@ LazyData: true
 RoxygenNote: 7.3.2
 LinkingTo: Rcpp
 Imports: Rcpp, dplyr, RcppDE, ggplot2
-URL: https://github.com/karlropkins/align, https://karlropkins.github.io/align/
-BugReports: https://github.com/karlropkins/align/issues
+URL: https://github.com/karlropkins/alignment, https://karlropkins.github.io/alignment/
+BugReports: https://github.com/karlropkins/alignment/issues
