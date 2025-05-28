@@ -191,7 +191,7 @@ align_extraArgsHandler <-
            ref.args = c("ans", "plot", "alignment")
   ){
 
-    #handles bad method requestes
+    #handles bad method requests
     #rationalises output = "plot" and plot = TRUE, etc
     extra.args <- modifyList(default.args, list(...))
 #could drop the default.output and method now....
@@ -244,7 +244,7 @@ align_extraArgsHandler <-
 #work in progress
 #
 
-#' @importFrom dplyr intersect
+#uses data.table
 
 align_XYByArgsHandler <-
   function(x, y = NULL, by = NULL, method = "..._align"){
@@ -375,8 +375,8 @@ align_XYByArgsHandler <-
         ))
       }
       #if have intersecting name can use...
-      if(length(dplyr::intersect(names(x), names(y))) > 0){
-        ref <- dplyr::intersect(names(x), names(y))[1]
+      if(length(names(x)[names(x) %in% names(y)]) > 0){
+        ref <- names(x)[names(x) %in% names(y)][1]
         warning(method, "(x, y, ...) using first 'x'/'y' match, by='",
                 ref, "'.",
                 call. = FALSE)

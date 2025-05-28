@@ -2,6 +2,8 @@
 
 * Package releases as **alignment** 
 
+    * __v.0.0.9__ [2025-05-28] old code/methods; switch dplyr to data.table 
+    
     * __v.0.0.8__ [2025-05-25] renamed package alignment and made associated 
     archives because align name in-use on CRAN and aiming to submit this to CRAN 
     this year); leaving align archive as-is because package still in use.  

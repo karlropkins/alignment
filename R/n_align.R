@@ -102,10 +102,13 @@ n_align.default <-
     #    in pems.utils version
     x$..ref <- 1:nrow(x)
     y$..ref <- 1:nrow(y) + n
-    ans <- dplyr::full_join(x, y, by="..ref")
+    ans <- as.data.frame(data.table::merge.data.table(data.table::as.data.table(x), 
+                                                      y, by="..ref", all=TRUE))
     ####################
     #pad ref if needed
     #(pems did this for you)
+    ####################
+    #use data.table suffixes argument???
     ####################
     temp <- min(ans$..ref, na.rm = TRUE): max(ans$..ref,
                                               na.rm = TRUE)

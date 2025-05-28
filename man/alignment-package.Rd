@@ -67,9 +67,9 @@ pp.373-391. \url{https://doi.org/10.1016/j.trac.2008.11.013}.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/karlropkins/align}
-  \item \url{https://karlropkins.github.io/align/}
-  \item Report bugs at \url{https://github.com/karlropkins/align/issues}
+  \item \url{https://github.com/karlropkins/alignment}
+  \item \url{https://karlropkins.github.io/alignment/}
+  \item Report bugs at \url{https://github.com/karlropkins/alignment/issues}
 }
 
 }
