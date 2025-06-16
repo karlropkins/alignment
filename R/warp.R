@@ -127,7 +127,7 @@ warp_frame <-
       }
       if (any(c("POSIXct", "POSIXt") %in% class(x[, i]))) {
         #####################################
-        #posix handlign needs thinking about
+        #posix handling needs thinking about
         #this works because data is 1Hz...
         #####################################
         new.df[, i] <- x[1, i] + new.x

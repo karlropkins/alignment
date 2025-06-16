@@ -270,7 +270,7 @@ histc <-
       bin <- c(rep(0, nlow), bin)
     }
     if( nhigh > 0 ){
-      bin <- c(bin, rep(0, nlow))
+      bin <- c(bin, rep(0, nhigh))
     }
     return(bin)
   }

@@ -44,7 +44,6 @@ NumericVector C_ylagxCOR(NumericVector x, NumericVector y) {
   return ans;
 }
 
-
 //from is_true(any(is_na(x)))
 // assume is_false(is_na(x)) says is this single value not missing
 // doesn't seem to....

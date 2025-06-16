@@ -26,18 +26,18 @@
 
 #' @export
 cow <- function(Ta, X, Seg, Slack, Options) {
-
+  
   # Initialise
   if(is.matrix(X)){
     dimX <-   length(X)  #  dimX   : Number of signals thar are to be aligned
   } else {
     dimX <- c(1, length(X))
   }
-
+  
   npT <- length(Ta) #  npT    : Number of points in teh target
   Xwarped <- matrix(nrow = dimX[1], ncol = dimX[2]) # Initialise matrix of warped signasl
   time <- NULL
-
+  
   #### Initialise segments ####
   Seg <- floor(Seg)
   pred_bound <- length(Seg) > 1
@@ -56,15 +56,13 @@ cow <- function(Ta, X, Seg, Slack, Options) {
     }
     if (Options[[3]]) {
       nSeg <- floor((npT - 1)/Seg)
-      len_segs <- matrix(floor((npT - 1)/ nSeg), nrow = 1)
+      len_segs <- matrix(floor((npT - 1)/ nSeg), ncol=nSeg, nrow = 2)
       len_segs[2, ] <- floor((dimX[2] - 1)/ nSeg)
-
       print('Segment lengh adjusted to the best cover the remainders')
     } else {
       nSeg = floor((npT - 1) / (Seg - 1))
       tmp_segs <- rep(Seg - 1, nSeg)
-      len_segs <- matrix(c(tmp_segs, tmp_segs), nrow = 2)
-
+      len_segs <- matrix(c(tmp_segs, tmp_segs), nrow = 2, ncol=length(tmp_segs))
       if (floor((dimX[2] -1) / (Seg - 1)) != nSeg){
         stop('For non-fixed segment lengths the target and the signal do not have the same number o fsegments. Try option 3 set to T')
       }
@@ -82,18 +80,18 @@ cow <- function(Ta, X, Seg, Slack, Options) {
                      ' Points x: ', nSeg))
       }
     }
-
+    
     tmp <- (dimX[2] - 1) %% len_segs[2, 1]
     if(tmp > 0) {
       len_segs[2, nSeg] <- len_segs[2, 1] + tmp
     }
   }
-
+  
   bT <- cumsum(c(1, len_segs[1, ]))
   bP <- cumsum(c(1, len_segs[2, ]))
   Warping <- matrix(nrow = dimX[1], ncol = (nSeg+1) )
 
-  #### Chech Slack ####
+  #### Check Slack ####
   if (length(Slack) > 1){
     if (length(Slack) <= nSeg) {
       stop('The number of slack parameters is not equal to the number of optimised segments')
@@ -101,7 +99,7 @@ cow <- function(Ta, X, Seg, Slack, Options) {
     stop('Multiple slacks have not been implemented yet')
   }
   Slacks_vec = seq(-Slack, Slack)
-
+  
   #### Set feasible points for boundaies ####
   Bounds <- matrix(rep(1, 2*(nSeg +1)), nrow = 2)
   # Slope constrints
@@ -116,54 +114,53 @@ cow <- function(Ta, X, Seg, Slack, Options) {
                               nrow = 2, byrow = T), 2, max )
   Bounds[2, ] <- apply(matrix(c(Bounds_a[2, ], Bounds_b[2, ]),
                               nrow = 2, byrow = T), 2, min )
-
+  
   #Option 4 is not incorporated
-
+  
   #### Calculate de first derivate for interpolation ####
   Xdiff <- diff(X)
-
+  
   ####  Calculate coefficients and indexes for interpolation ####
   Int_Coeff <- vector('list', nSeg)
   Int_Index <- Int_Coeff
-
+  
   if(!pred_bound) {
     for (i in seq(1, nSeg -1 )) {
       Int_Coeff[[ i ]] <- InterpCoeff(n = len_segs[1, 1] +1 ,
                                       nprime = len_segs[2, 1 ] + Slacks_vec + 1,
                                       offs = Slacks_vec, rtn = 'coeff')
-
+      
       Int_Index[[ i ]] <- InterpCoeff(n = len_segs[1, 1] +1 ,
                                       nprime = len_segs[2, 1 ] + Slacks_vec + 1,
                                       offs = Slacks_vec, rtn = 'index')
     }
-
+    
     Int_Coeff[[nSeg]] <- InterpCoeff(n = len_segs[1, nSeg] +1 ,
                                      nprime = len_segs[2, nSeg ] + Slacks_vec + 1,
                                      offs = Slacks_vec, rtn = 'coeff')
-
+    
     Int_Index[[nSeg]] <- InterpCoeff(n = len_segs[1, nSeg] +1 ,
                                      nprime = len_segs[2, nSeg ] + Slacks_vec + 1,
                                      offs = Slacks_vec, rtn = 'index')
-
+    
   } else {
     for (i in seq(1, nSeg) ) {
       Int_Coeff[[i]] <- InterpCoeff(n = len_segs[1, i] +1 ,
                                     nprime = len_segs[2, i ] + Slacks_vec + 1,
                                     offs = Slacks_vec, rtn = 'coeff')
-
+      
       Int_Index[[i]] <- InterpCoeff(n = len_segs[1, i] +1 ,
                                     nprime = len_segs[2, i ] + Slacks_vec + 1,
                                     offs = Slacks_vec, rtn = 'index')
     }
   }
-
-
+  
   #### Dynamic Programming Section ####
   table_index <- cumsum(c(0, Bounds[2, ] - Bounds[1, ] + 1) )
   Table <- matrix(0, nrow = 3, ncol =table_index[nSeg + 2])
-
+  
   Table[2, 2:ncol(Table)] <- -Inf
-
+  
 
   for (i in seq(1, nSeg + 1)) {
     v <- seq(Bounds[1, i], Bounds[2, i])
@@ -172,6 +169,7 @@ cow <- function(Ta, X, Seg, Slack, Options) {
   # Forward phase
   time1 <- Sys.time()
 
+  
   for (i in seq(1, nSeg)) {
     a <- Slacks_vec + len_segs[2, i]
     b <- table_index[i] + 1 - Bounds[1, i]
@@ -180,32 +178,38 @@ cow <- function(Ta, X, Seg, Slack, Options) {
     node_z <- table_index[i + 2]
     node_a <- table_index[i + 1] + 1
     bound_k_table <- matrix(nrow = 2, ncol =  node_z - node_a + 1)
-
+    
     int_index_seg <- t(Int_Index[[i]]) - (len_segs[2, i] +1)
     int_coeff_seg <- t(Int_Coeff[[i]])
-
+    
     TSeg = Ta[ seq(bT[i], bT[i + 1]) ];
     TSeg_centered = TSeg - sum(TSeg)/length(TSeg)
     Norm_TSeg_cen  <- norm(TSeg_centered, type = '2')
-
+    
+    
     for (j in seq(node_a, node_z) ) {
       prec_nodes <- Table[1, j] - a
       allowed_arcs <- prec_nodes >= Bounds[1, i] & prec_nodes <= Bounds[2, i]
       nodes_tablePointer <- b + prec_nodes[allowed_arcs]
       n_aa <- sum(allowed_arcs)
-
+      
+     
       if(n_aa  != 0 ){
+        
         Index_Node <- Table[1, j] + int_index_seg[, allowed_arcs]
+        
         coeff_b <- sapply(int_coeff_seg[, allowed_arcs], function(x) x)
         #coeff_b <- coeff_b[1, ]
         Xi_seg <- X[Index_Node]
         Xi_diff <- Xdiff[Index_Node]
+        
         toreshape <- matrix(c(coeff_b, Xi_diff), nrow = 2, byrow = T)
-        toreshape <- apply(toreshape, 2, prod) + Xi_seg
+        toreshape <- apply(toreshape, 2, prod)  + Xi_seg
+        
         Xi_seg <- matrix(toreshape, nrow = c, ncol = n_aa*dimX[1] )
-
         Xi_Seg_mean <- colSums(Xi_seg)/nrow(Xi_seg)
         Norm_Xi_Seg_cen <- sqrt(colSums(Xi_seg^2) - nrow(Xi_seg) * Xi_Seg_mean^2)
+        
         CCs_Node <- ( as.numeric(TSeg_centered) %*% Xi_seg ) /
           (Norm_TSeg_cen %*% Norm_Xi_Seg_cen)
         CCs_Node <- ifelse(is.finite(CCs_Node), CCs_Node, 0)
@@ -215,20 +219,28 @@ cow <- function(Ta, X, Seg, Slack, Options) {
         } else {
           Cost_Fun <- matrix(Table[2, nodes_tablePointer], nrow = n_aa) + CCs_Node^Options[[2]]
         }
-
+        
+        
         ind <- max(Cost_Fun)
         pos <- match(ind, Cost_Fun)
         bound_k_table[1, counting] <- ind
         bound_k_table[2, counting] <- nodes_tablePointer[pos]
+        
         counting <- counting + 1
-
+        
+        #if(j == node_z) { 
+        #  print("test") 
+        #  print(bound_k_table)
+        #}
       }
-
     }
     Table[2:3, seq(node_a, node_z)] <- bound_k_table
+  
   }
   time2 <- Sys.time()
   elapsed <- time2 - time1
+  
+ 
 
   for (i in seq(1, dimX[1])) {
     Pointer <- ncol(Table)
@@ -238,6 +250,7 @@ cow <- function(Ta, X, Seg, Slack, Options) {
       Warping[i, j] <- Table[1, Pointer]
     }
   }
+  
   Xwarped <- NULL
   for (i in seq(1, nSeg)) {
     indT <- seq(bT[i], bT[i + 1])
@@ -245,13 +258,16 @@ cow <- function(Ta, X, Seg, Slack, Options) {
     for (j in seq(1, dimX[1])) {
       indX <- seq(Warping[j, i], Warping[j, i + 1])
       lenX <- Warping[j, i + 1] - Warping[j, i]
+      #print("test")
+      #print(seq(0, lenT)/lenT * lenX + 1)
       Xwarped[indT] <- approx(x = indX - Warping[j, i] + 1,
                               y = X[indX],
                               xout = seq(0, lenT)/lenT * lenX + 1 )$y
     }
   }
+
   return(list(bT = bT, Warping = Warping, nSeg=nSeg,
-                Xwarped = Xwarped))
+              Xwarped = Xwarped))
   #return(Xwarped)
 }
 
@@ -274,7 +290,7 @@ histc <- function(values, edges) {
   bin <- bin[!is.na(bin)]
   upper <- match(edges[ledges], values)
   if(!is.na(upper)){
-   bin[length(bin) +1 ] = i+1
+    bin[length(bin) +1 ] = i+1
   }
   if( nlow > 0 ){
     bin <- c(rep(0, nlow), bin)
@@ -282,7 +298,7 @@ histc <- function(values, edges) {
   if( nhigh > 0 ){
     bin <- c(bin, rep(0, nlow))
   }
-
+  
   return(bin)
 }
 
@@ -303,4 +319,3 @@ InterpCoeff <- function(n, nprime, offs, rtn) {
          'coeff' = return(coeff),
          'index' = return(index))
 }
-

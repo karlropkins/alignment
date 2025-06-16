@@ -2,6 +2,8 @@
 
 * Package releases as **alignment** 
 
+    * __v.0.0.10__ [2025-06-16] added C_cow;  
+
     * __v.0.0.9__ [2025-05-28] old code/methods; switch dplyr to data.table 
     
     * __v.0.0.8__ [2025-05-25] renamed package alignment and made associated 

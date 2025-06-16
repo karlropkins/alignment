@@ -10,6 +10,47 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// C_InterpCoeff
+NumericMatrix C_InterpCoeff(NumericVector n, NumericVector nprime, NumericVector offs, CharacterVector rtn);
+RcppExport SEXP _alignment_C_InterpCoeff(SEXP nSEXP, SEXP nprimeSEXP, SEXP offsSEXP, SEXP rtnSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type n(nSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type nprime(nprimeSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type offs(offsSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type rtn(rtnSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_InterpCoeff(n, nprime, offs, rtn));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_cow
+List C_cow(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options);
+RcppExport SEXP _alignment_C_cow(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP SlackSEXP, SEXP OptionsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type Ta(TaSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Seg(SegSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Slack(SlackSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Options(OptionsSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_cow(Ta, X, Seg, Slack, Options));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_histc
+NumericVector C_histc(NumericVector values, NumericVector edges);
+RcppExport SEXP _alignment_C_histc(SEXP valuesSEXP, SEXP edgesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type values(valuesSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type edges(edgesSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_histc(values, edges));
+    return rcpp_result_gen;
+END_RCPP
+}
 // C_ylagxCOR
 NumericVector C_ylagxCOR(NumericVector x, NumericVector y);
 RcppExport SEXP _alignment_C_ylagxCOR(SEXP xSEXP, SEXP ySEXP) {
@@ -24,6 +65,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_alignment_C_InterpCoeff", (DL_FUNC) &_alignment_C_InterpCoeff, 4},
+    {"_alignment_C_cow", (DL_FUNC) &_alignment_C_cow, 5},
+    {"_alignment_C_histc", (DL_FUNC) &_alignment_C_histc, 2},
     {"_alignment_C_ylagxCOR", (DL_FUNC) &_alignment_C_ylagxCOR, 2},
     {NULL, NULL, 0}
 };
