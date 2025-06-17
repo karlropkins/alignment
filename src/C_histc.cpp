@@ -1,5 +1,8 @@
+// [[Rcpp::interfaces(r, cpp)]]
+
 #include <Rcpp.h>
 using namespace Rcpp;
+
 
 //   about Rcpp
 //   http://www.rcpp.org/

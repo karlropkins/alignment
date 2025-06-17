@@ -17,3 +17,7 @@ C_ylagxCOR <- function(x, y) {
     .Call('_alignment_C_ylagxCOR', PACKAGE = 'alignment', x, y)
 }
 
+# Register entry points for exported C++ functions
+methods::setLoadAction(function(ns) {
+    .Call('_alignment_RcppExport_registerCCallable', PACKAGE = 'alignment')
+})
