@@ -9,6 +9,10 @@ C_cow <- function(Ta, X, Seg, Slack, Options) {
     .Call('_alignment_C_cow', PACKAGE = 'alignment', Ta, X, Seg, Slack, Options)
 }
 
+C_cow2 <- function(Ta, X, Seg, Slack, Options) {
+    .Call('_alignment_C_cow2', PACKAGE = 'alignment', Ta, X, Seg, Slack, Options)
+}
+
 C_histc <- function(values, edges) {
     .Call('_alignment_C_histc', PACKAGE = 'alignment', values, edges)
 }

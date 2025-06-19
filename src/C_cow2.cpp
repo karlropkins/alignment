@@ -3,41 +3,29 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-//   using Rcpp
+//   about Rcpp
 //   http://www.rcpp.org/
 //   http://adv-r.had.co.nz/Rcpp.html
 //   http://gallery.rcpp.org/
 
-//based on R alignment::cow////
+//cow as R////
 
-// C_cow <- function(Ta, X, Seg, Slack, Options) {
+// cow <- function(Ta, X, Seg, Slack, Options) {
 
-// Ta, NumericVector - the target (a data-series to warp X on to..)
-// X, NumericVector - the data-series to warp (NB only does one series at a time...) 
-// Seg - NumericVector - either the number of segments to use if length = 1 else the segment break points 
-// Slack - NumericVector - the maxium segment slack allowed when warping (unit X entries) 
-// Options - NumericVector - the setting when applying COW... 
+// output list 
+// https://stackoverflow.com/questions/72176779/how-to-return-objects-of-different-types-from-rcpparmadillo-function
+// Rcpp::NumericMatrix  
+// https://teuder.github.io/rcpp4everyone_en/100_matrix.html
+// running R code from C
+// https://teuder.github.io/rcpp4everyone_en/230_R_function.html 
 
-// check above off against alignment::cow documentation... also get options from there...
 
-// notes
-// in original code X was a NumericMatrix 
-// dropped this to NumericVector because anything more than a 1-row matrix failed... 
-// (intending handling that using a C_cow_multiX wrapper...) 
-// still some redundancies to remove 
-//     DimX was for X when matrix so DimX[0] ALWAYS 1
-//        currently setting dimX to (1, X.length()) but could go further
-//        also, some of the two level for loops can be simplified...
-//     some NumericVectors are only every 1-long, could replace with scalars
-//     I think Warping should be a NumericVector rather than ...Matrix
 
 // [[Rcpp::export]]
-List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
+List C_cow2(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
   
   // setup
-  NumericVector dimX(2);
-  dimX[0] = 1; 
-  dimX[1] = X.length();
+  NumericVector dimX = X.attr("dim");
   Seg = floor(Seg);
   int npT = Ta.length();    // number of points in target
   NumericVector nSeg(1); 
@@ -102,12 +90,9 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
     }
   }
   
-  // this is where X as matrix issue happens
-  // (wondering if a c_cow_multiX wrapper might be easier ??)
-  NumericVector Xwarped(dimX[1]);  // Initialise 
-  NumericVector X0 = X;  // this is a single vector x now
-                         // would need row-based loop and X0=X(row, _) 
-                         // also need several matrices 
+  NumericMatrix Xwarped(dimX[0], dimX[1]);  // Initialise matrix of warped signals
+  NumericVector X0 = X(0,_);  // this is the first column of the supplied matrix
+  
   NumericVector bT(nSeg[0]+1);
   bT[0] = 1;
   for(int i=1; i<nSeg[0]+1; ++i){
@@ -141,7 +126,7 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
   //I simplified next bit...
   //IntegerVector Bounds_ind = seq(0, nSeg[0] ); // don't need to use
   // TO LOOK AT 
-  // Can I drop Bounds_a and Bounds_b and work straight into Bounds
+  // Can I drop Bounds_a and Bounds_b and work striaght into Bounds
   //    would drop two matrices...
   NumericMatrix Bounds_a(2, offs_tmp.size()); 
   for(int i=0; i<offs_tmp.length(); ++i){
@@ -174,7 +159,7 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
   NumericMatrix Xdiff(dimX[0], dimX[1]-1 ); 
   for(int i=0; i<dimX[0]; ++i){
     for(int j=1; j<dimX[1]; ++j){
-      Xdiff(i,j-1) = X[j] - X[j-1];
+      Xdiff(i,j-1) = X(i,j) - X(i,j-1);
     }
   }
   //  Calculate coefficients and indexes for interpolation ####
@@ -222,9 +207,9 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
   //  Table[1, seq(table_index[i] +1, table_index[i +1])  ] <-v
   //}
   for (int i=0; i < table_index.length()-1; ++i) {
-    for(int j = 0; j < (Bounds(1, i) - Bounds(0, i))+1; ++j){
-      Table(0, table_index[i]+j) = Bounds(0, i)+j;
-    }
+      for(int j = 0; j < (Bounds(1, i) - Bounds(0, i))+1; ++j){
+        Table(0, table_index[i]+j) = Bounds(0, i)+j;
+      }
   }
   
   // Forward phase
@@ -316,7 +301,7 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
         NumericMatrix Xi_seg_sp(Index_Node.rows(), Index_Node.cols()); 
         for(int ii=0; ii<Index_Node.ncol(); ++ii){
           for(int jj=0; jj<Index_Node.nrow(); ++jj){
-            Xi_seg_sp(jj, ii) = X[Index_Node(jj, ii)-1]; // NB this only does first row of matrix
+            Xi_seg_sp(jj, ii) = X(0, Index_Node(jj, ii)-1); // NB this only does first row of matrix
           }
         }
         // Xi_diff <- Xdiff[Index_Node]
@@ -331,7 +316,7 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
         // toreshape <- apply(toreshape, 2, prod)  + Xi_seg
         NumericVector reshape1(Xi_diff.begin(), Xi_diff.end());
         for(int ii=0; ii<coeff_b.length(); ++ii){
-          reshape1[ii] = coeff_b[ii] * reshape1[ii];
+            reshape1[ii] = coeff_b[ii] * reshape1[ii];
         }
         reshape1 = reshape1 + Xi_seg_sp;
         // Xi_seg <- matrix(toreshape, nrow = c, ncol = n_aa*dimX[1] )
@@ -388,10 +373,10 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
         bound_k_table(1, counting-1) = nodes_tablePointer[pos];  // remember 0 not NAs...
         
         counting = counting + 1;
-        
+
         // test(i) = bound_k_table;
         // test end
-        
+         
       }
       // the counter for testing within for loops  
       //tmp=tmp+1;
@@ -461,7 +446,7 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
       }
       NumericVector y_temp(indX.length());
       for(int ii=0; ii<y_temp.length(); ++ii){
-        y_temp[ii] = X[indX[ii]-1];
+        y_temp[ii] = X(j, indX[ii]-1);
       }
       NumericVector new_temp(lenT+1);
       for(int ii=0; ii<new_temp.length(); ++ii){
@@ -472,19 +457,19 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
       List app_out = R_approx(indX - Warping(j, i) + 1, y_temp, new_temp );
       NumericVector out_temp = app_out["y"];
       for(int ii=0; ii<indT.length(); ++ii){
-        Xwarped[indT(ii)-1] = out_temp[ii]; 
+        Xwarped(j, indT(ii)-1) = out_temp[ii]; 
       }
     }
   }
-  
+
   //return(list(bT = bT, Warping = Warping, nSeg=nSeg,
   //            Xwarped = Xwarped))
   List out = List::create(Named("bT", bT),
                           Named("Warping", Warping),
                           Named("nSeg", nSeg),
-                          Named("Xwarped", Xwarped));
+                          Named("Xwarped"), Xwarped);
   return out;
-  
+
 }
 
 // C version of cow... in R  
@@ -494,7 +479,7 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
 // this this should generate following
 // /*** R
 // > cow(1:10, 1:10, Seg=3, Slack=1, Options = c(2,1,0,1))
-// > C_cow(1:10, 1:10, Seg=3, Slack=1, Options = c(2,1,0,1)) 
+// > C_cow(1:10, matrix(1:10), Seg=3, Slack=1, Options = c(2,1,0,1)) 
 // [1] "Segments: 3 Points: 3"
 // $bT
 // [1]  1  3  5  7 10
@@ -511,4 +496,4 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
 // */
 
 // test 
-// Rcpp::compileAttributes(); devtools::load_all(); C_cow(1:10, 1:10, Seg=3, Slack=1, Options = c(1,1,0,1)); cow(1:10, 1:10, Seg=3, Slack=1, Options = c(1,1,0,1))
+// Rcpp::compileAttributes(); devtools::load_all(); C_cow(1:10, matrix(1:10, nrow=1), Seg=3, Slack=1, Options = c(1,1,0,1)); cow(1:10, 1:10, Seg=3, Slack=1, Options = c(1,1,0,1))

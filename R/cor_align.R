@@ -146,7 +146,7 @@ function(x, y = NULL, by = NULL, min.overlap = NULL, ...){
 
     #######################################################
     #NOTE:
-    #from here this is compremise ()
+    #from here this is compromise 
     #we build the full alignment object and pull out the
     #    bits we want rather than just building the bits we
     #    want when we want them...

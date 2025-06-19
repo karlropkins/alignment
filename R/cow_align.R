@@ -193,7 +193,6 @@ cow_align.default <-
                                       r.power=r.power,
                                       pad.method = pad.method)
 
-
   #replaced option[1] with print.report
   #replaced option[2] with r.power, can be 1-4
 

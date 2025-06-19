@@ -11,7 +11,7 @@
 #' \code{ans <- _align(ts1, ts2, ...)}
 #'
 #' In the simplest cases \code{ts1} is a \code{vector} to be used as a
-#' reference time-series and \code{ts2} is a second time-series to be aligned
+#' reference time-series and \code{ts2} is a second time-series vector to be aligned
 #' with it. However, either can also be a \code{data.frame} in which case an
 #' extra argument \code{by} should be included to identify the data.frame columns
 #' to use, e.g. for \code{df1} containing \code{ts1} and \code{df2} containing
@@ -27,7 +27,7 @@
 #'
 #' \code{ans <- _align(df, by=c("ts1", "ts2"), ...)}
 #'
-#' (in which case only df$ts2 is aligned...)
+#' (in which case only df$ts2 is aligned using df$ts1 as the reference...)
 #'
 #' The default output is typically a single \code{data.frame} containing the
 #' aligned data, but other outputs may also be generated, e.g. plots and

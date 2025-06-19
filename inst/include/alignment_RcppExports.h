@@ -45,17 +45,38 @@ namespace alignment {
         return Rcpp::as<NumericMatrix >(rcpp_result_gen);
     }
 
-    inline List C_cow(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
+    inline List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
         typedef SEXP(*Ptr_C_cow)(SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_C_cow p_C_cow = NULL;
         if (p_C_cow == NULL) {
-            validateSignature("List(*C_cow)(NumericVector,NumericMatrix,NumericVector,NumericVector,NumericVector)");
+            validateSignature("List(*C_cow)(NumericVector,NumericVector,NumericVector,NumericVector,NumericVector)");
             p_C_cow = (Ptr_C_cow)R_GetCCallable("alignment", "_alignment_C_cow");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
             rcpp_result_gen = p_C_cow(Shield<SEXP>(Rcpp::wrap(Ta)), Shield<SEXP>(Rcpp::wrap(X)), Shield<SEXP>(Rcpp::wrap(Seg)), Shield<SEXP>(Rcpp::wrap(Slack)), Shield<SEXP>(Rcpp::wrap(Options)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<List >(rcpp_result_gen);
+    }
+
+    inline List C_cow2(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
+        typedef SEXP(*Ptr_C_cow2)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_C_cow2 p_C_cow2 = NULL;
+        if (p_C_cow2 == NULL) {
+            validateSignature("List(*C_cow2)(NumericVector,NumericMatrix,NumericVector,NumericVector,NumericVector)");
+            p_C_cow2 = (Ptr_C_cow2)R_GetCCallable("alignment", "_alignment_C_cow2");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_C_cow2(Shield<SEXP>(Rcpp::wrap(Ta)), Shield<SEXP>(Rcpp::wrap(X)), Shield<SEXP>(Rcpp::wrap(Seg)), Shield<SEXP>(Rcpp::wrap(Slack)), Shield<SEXP>(Rcpp::wrap(Options)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
