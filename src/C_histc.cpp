@@ -2,12 +2,10 @@
 
 #include <Rcpp.h>
 using namespace Rcpp;
-
-
-//   about Rcpp
 //   http://www.rcpp.org/
-//   http://adv-r.had.co.nz/Rcpp.html
-//   http://gallery.rcpp.org/
+
+// C version of R::histc  
+// could improve/tidy this a lot but it works!!!!
 
 // histc <- function(values, edges) {
 //   ledges <- length(edges)
@@ -33,9 +31,8 @@ using namespace Rcpp;
 //    return(bin)
 //}
 
-
 // [[Rcpp::export]]
-NumericVector C_histc(NumericVector values, NumericVector edges) {
+NumericVector c_histc(NumericVector values, NumericVector edges) {
   
   NumericVector nlow = values[values < edges[0]];
   NumericVector nhigh = values[values > edges[edges.size() - 1]];
@@ -70,10 +67,6 @@ NumericVector C_histc(NumericVector values, NumericVector edges) {
   }
   return bin;
 }
-
-// C version of histc... in R  
-// could improve/tidy this a lot but it works!!!!
-// hurts my head thinking about this...
 
 
 // this this should generate 0:9

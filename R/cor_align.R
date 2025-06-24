@@ -138,7 +138,7 @@ function(x, y = NULL, by = NULL, min.overlap = NULL, ...){
     y <- c(rep(NA, pad), y, rep(NA, pad))
 
     #use C_ylagxCOR to find best fit alignment
-    lag.scs <- .Call("_alignment_C_ylagxCOR", x, y)
+    lag.scs <- .Call("_alignment_c_ylagxCOR", x, y)
     index <- (1:length(lag.scs)) - length(x) + min.overlap - 1
     if(!reversed) index <- -index
     bst.lag <- index[which(lag.scs==max(lag.scs, na.rm=TRUE))[1]]

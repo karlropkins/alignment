@@ -10,7 +10,7 @@ using namespace Rcpp;
 
 //based on R alignment::cow////
 
-// C_cow <- function(Ta, X, Seg, Slack, Options) {
+// c_cow <- function(Ta, X, Seg, Slack, Options) {
 
 // Ta, NumericVector - the target (a data-series to warp X on to..)
 // X, NumericVector - the data-series to warp (NB only does one series at a time...) 
@@ -32,7 +32,7 @@ using namespace Rcpp;
 //     I think Warping should be a NumericVector rather than ...Matrix
 
 // [[Rcpp::export]]
-List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
+List c_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
   
   // setup
   NumericVector dimX(2);
@@ -123,7 +123,7 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
   
   // check slack
   if(Slack.length() > 1 ){
-    if(Slack.length() <- nSeg[0] ){
+    if(!(Slack.length() == nSeg[0]) ){
       stop("The number of slack parameters is not equal to the number of optimised segments");
     }
     stop("Multiple slacks have not been implemented yet"); 
@@ -182,21 +182,21 @@ List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector S
   List Int_Index(nSeg[0]);
   
   Environment pkg = Environment::namespace_env("alignment");
-  Function C_InterpCoeff = pkg["C_InterpCoeff"];
+  Function c_InterpCoeff = pkg["c_InterpCoeff"];
   
   if(Seg.length()  == 1){
     // supplied seg length 1
     for(int i=0; i < nSeg[0]-1; ++i){
-      Int_Coeff[i] = C_InterpCoeff(len_segs(0, 0) +1, len_segs(1, 0) + Slacks_vec + 1, Slacks_vec, "coeff");
-      Int_Index[i] = C_InterpCoeff(len_segs(0, 0) +1, len_segs(1, 0) + Slacks_vec + 1, Slacks_vec, "index");
+      Int_Coeff[i] = c_InterpCoeff(len_segs(0, 0) +1, len_segs(1, 0) + Slacks_vec + 1, Slacks_vec, "coeff");
+      Int_Index[i] = c_InterpCoeff(len_segs(0, 0) +1, len_segs(1, 0) + Slacks_vec + 1, Slacks_vec, "index");
     }
-    Int_Coeff[nSeg[0]-1] = C_InterpCoeff(len_segs(0, nSeg[0]-1) +1, len_segs(1, nSeg[0]-1) + Slacks_vec + 1, Slacks_vec, "coeff");
-    Int_Index[nSeg[0]-1] = C_InterpCoeff(len_segs(0, nSeg[0]-1) +1, len_segs(1, nSeg[0]-1) + Slacks_vec + 1, Slacks_vec, "index");
+    Int_Coeff[nSeg[0]-1] = c_InterpCoeff(len_segs(0, nSeg[0]-1) +1, len_segs(1, nSeg[0]-1) + Slacks_vec + 1, Slacks_vec, "coeff");
+    Int_Index[nSeg[0]-1] = c_InterpCoeff(len_segs(0, nSeg[0]-1) +1, len_segs(1, nSeg[0]-1) + Slacks_vec + 1, Slacks_vec, "index");
   } else {
     // seg length > 1
     for(int i=0; i < nSeg[0]; ++i){
-      Int_Coeff[i] = C_InterpCoeff(len_segs(0, i) +1, len_segs(1, i) + Slacks_vec + 1, Slacks_vec, "coeff");
-      Int_Index[i] = C_InterpCoeff(len_segs(0, i) +1, len_segs(1, i) + Slacks_vec + 1, Slacks_vec, "index");
+      Int_Coeff[i] = c_InterpCoeff(len_segs(0, i) +1, len_segs(1, i) + Slacks_vec + 1, Slacks_vec, "coeff");
+      Int_Index[i] = c_InterpCoeff(len_segs(0, i) +1, len_segs(1, i) + Slacks_vec + 1, Slacks_vec, "index");
     }
   }
   

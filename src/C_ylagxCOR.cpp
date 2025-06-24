@@ -9,7 +9,7 @@ using namespace Rcpp;
 //   http://gallery.rcpp.org/
 
 // [[Rcpp::export]]
-NumericVector C_ylagxCOR(NumericVector x, NumericVector y) {
+NumericVector c_ylagxCOR(NumericVector x, NumericVector y) {
   int lenx = x.size();
   int leny = y.size();
   NumericVector ans(leny-lenx+1);

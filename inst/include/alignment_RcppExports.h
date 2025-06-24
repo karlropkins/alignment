@@ -24,17 +24,17 @@ namespace alignment {
         }
     }
 
-    inline NumericMatrix C_InterpCoeff(NumericVector n, NumericVector nprime, NumericVector offs, CharacterVector rtn) {
-        typedef SEXP(*Ptr_C_InterpCoeff)(SEXP,SEXP,SEXP,SEXP);
-        static Ptr_C_InterpCoeff p_C_InterpCoeff = NULL;
-        if (p_C_InterpCoeff == NULL) {
-            validateSignature("NumericMatrix(*C_InterpCoeff)(NumericVector,NumericVector,NumericVector,CharacterVector)");
-            p_C_InterpCoeff = (Ptr_C_InterpCoeff)R_GetCCallable("alignment", "_alignment_C_InterpCoeff");
+    inline NumericMatrix c_InterpCoeff(NumericVector n, NumericVector nprime, NumericVector offs, CharacterVector rtn) {
+        typedef SEXP(*Ptr_c_InterpCoeff)(SEXP,SEXP,SEXP,SEXP);
+        static Ptr_c_InterpCoeff p_c_InterpCoeff = NULL;
+        if (p_c_InterpCoeff == NULL) {
+            validateSignature("NumericMatrix(*c_InterpCoeff)(NumericVector,NumericVector,NumericVector,CharacterVector)");
+            p_c_InterpCoeff = (Ptr_c_InterpCoeff)R_GetCCallable("alignment", "_alignment_c_InterpCoeff");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_C_InterpCoeff(Shield<SEXP>(Rcpp::wrap(n)), Shield<SEXP>(Rcpp::wrap(nprime)), Shield<SEXP>(Rcpp::wrap(offs)), Shield<SEXP>(Rcpp::wrap(rtn)));
+            rcpp_result_gen = p_c_InterpCoeff(Shield<SEXP>(Rcpp::wrap(n)), Shield<SEXP>(Rcpp::wrap(nprime)), Shield<SEXP>(Rcpp::wrap(offs)), Shield<SEXP>(Rcpp::wrap(rtn)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -45,17 +45,17 @@ namespace alignment {
         return Rcpp::as<NumericMatrix >(rcpp_result_gen);
     }
 
-    inline List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
-        typedef SEXP(*Ptr_C_cow)(SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr_C_cow p_C_cow = NULL;
-        if (p_C_cow == NULL) {
-            validateSignature("List(*C_cow)(NumericVector,NumericVector,NumericVector,NumericVector,NumericVector)");
-            p_C_cow = (Ptr_C_cow)R_GetCCallable("alignment", "_alignment_C_cow");
+    inline List c_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
+        typedef SEXP(*Ptr_c_cow)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_c_cow p_c_cow = NULL;
+        if (p_c_cow == NULL) {
+            validateSignature("List(*c_cow)(NumericVector,NumericVector,NumericVector,NumericVector,NumericVector)");
+            p_c_cow = (Ptr_c_cow)R_GetCCallable("alignment", "_alignment_c_cow");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_C_cow(Shield<SEXP>(Rcpp::wrap(Ta)), Shield<SEXP>(Rcpp::wrap(X)), Shield<SEXP>(Rcpp::wrap(Seg)), Shield<SEXP>(Rcpp::wrap(Slack)), Shield<SEXP>(Rcpp::wrap(Options)));
+            rcpp_result_gen = p_c_cow(Shield<SEXP>(Rcpp::wrap(Ta)), Shield<SEXP>(Rcpp::wrap(X)), Shield<SEXP>(Rcpp::wrap(Seg)), Shield<SEXP>(Rcpp::wrap(Slack)), Shield<SEXP>(Rcpp::wrap(Options)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -66,17 +66,17 @@ namespace alignment {
         return Rcpp::as<List >(rcpp_result_gen);
     }
 
-    inline List C_cow2(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
-        typedef SEXP(*Ptr_C_cow2)(SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr_C_cow2 p_C_cow2 = NULL;
-        if (p_C_cow2 == NULL) {
-            validateSignature("List(*C_cow2)(NumericVector,NumericMatrix,NumericVector,NumericVector,NumericVector)");
-            p_C_cow2 = (Ptr_C_cow2)R_GetCCallable("alignment", "_alignment_C_cow2");
+    inline List c_cow2(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
+        typedef SEXP(*Ptr_c_cow2)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_c_cow2 p_c_cow2 = NULL;
+        if (p_c_cow2 == NULL) {
+            validateSignature("List(*c_cow2)(NumericVector,NumericMatrix,NumericVector,NumericVector,NumericVector)");
+            p_c_cow2 = (Ptr_c_cow2)R_GetCCallable("alignment", "_alignment_c_cow2");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_C_cow2(Shield<SEXP>(Rcpp::wrap(Ta)), Shield<SEXP>(Rcpp::wrap(X)), Shield<SEXP>(Rcpp::wrap(Seg)), Shield<SEXP>(Rcpp::wrap(Slack)), Shield<SEXP>(Rcpp::wrap(Options)));
+            rcpp_result_gen = p_c_cow2(Shield<SEXP>(Rcpp::wrap(Ta)), Shield<SEXP>(Rcpp::wrap(X)), Shield<SEXP>(Rcpp::wrap(Seg)), Shield<SEXP>(Rcpp::wrap(Slack)), Shield<SEXP>(Rcpp::wrap(Options)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -87,17 +87,38 @@ namespace alignment {
         return Rcpp::as<List >(rcpp_result_gen);
     }
 
-    inline NumericVector C_histc(NumericVector values, NumericVector edges) {
-        typedef SEXP(*Ptr_C_histc)(SEXP,SEXP);
-        static Ptr_C_histc p_C_histc = NULL;
-        if (p_C_histc == NULL) {
-            validateSignature("NumericVector(*C_histc)(NumericVector,NumericVector)");
-            p_C_histc = (Ptr_C_histc)R_GetCCallable("alignment", "_alignment_C_histc");
+    inline List c_cow3(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
+        typedef SEXP(*Ptr_c_cow3)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_c_cow3 p_c_cow3 = NULL;
+        if (p_c_cow3 == NULL) {
+            validateSignature("List(*c_cow3)(NumericVector,NumericMatrix,NumericVector,NumericVector,NumericVector)");
+            p_c_cow3 = (Ptr_c_cow3)R_GetCCallable("alignment", "_alignment_c_cow3");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_C_histc(Shield<SEXP>(Rcpp::wrap(values)), Shield<SEXP>(Rcpp::wrap(edges)));
+            rcpp_result_gen = p_c_cow3(Shield<SEXP>(Rcpp::wrap(Ta)), Shield<SEXP>(Rcpp::wrap(X)), Shield<SEXP>(Rcpp::wrap(Seg)), Shield<SEXP>(Rcpp::wrap(Slack)), Shield<SEXP>(Rcpp::wrap(Options)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<List >(rcpp_result_gen);
+    }
+
+    inline NumericVector c_histc(NumericVector values, NumericVector edges) {
+        typedef SEXP(*Ptr_c_histc)(SEXP,SEXP);
+        static Ptr_c_histc p_c_histc = NULL;
+        if (p_c_histc == NULL) {
+            validateSignature("NumericVector(*c_histc)(NumericVector,NumericVector)");
+            p_c_histc = (Ptr_c_histc)R_GetCCallable("alignment", "_alignment_c_histc");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_c_histc(Shield<SEXP>(Rcpp::wrap(values)), Shield<SEXP>(Rcpp::wrap(edges)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -108,17 +129,17 @@ namespace alignment {
         return Rcpp::as<NumericVector >(rcpp_result_gen);
     }
 
-    inline NumericVector C_ylagxCOR(NumericVector x, NumericVector y) {
-        typedef SEXP(*Ptr_C_ylagxCOR)(SEXP,SEXP);
-        static Ptr_C_ylagxCOR p_C_ylagxCOR = NULL;
-        if (p_C_ylagxCOR == NULL) {
-            validateSignature("NumericVector(*C_ylagxCOR)(NumericVector,NumericVector)");
-            p_C_ylagxCOR = (Ptr_C_ylagxCOR)R_GetCCallable("alignment", "_alignment_C_ylagxCOR");
+    inline NumericVector c_ylagxCOR(NumericVector x, NumericVector y) {
+        typedef SEXP(*Ptr_c_ylagxCOR)(SEXP,SEXP);
+        static Ptr_c_ylagxCOR p_c_ylagxCOR = NULL;
+        if (p_c_ylagxCOR == NULL) {
+            validateSignature("NumericVector(*c_ylagxCOR)(NumericVector,NumericVector)");
+            p_c_ylagxCOR = (Ptr_c_ylagxCOR)R_GetCCallable("alignment", "_alignment_c_ylagxCOR");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_C_ylagxCOR(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)));
+            rcpp_result_gen = p_c_ylagxCOR(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();

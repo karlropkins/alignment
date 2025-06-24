@@ -2,11 +2,10 @@
 
 #include <Rcpp.h>
 using namespace Rcpp;
-
 //   about Rcpp
-//   http://www.rcpp.org/
-//   http://adv-r.had.co.nz/Rcpp.html
-//   http://gallery.rcpp.org/
+
+// C version of InterCoeff... in R  
+// could improve/tidy this a lot but *think* it works!!!!
 
 //InterpCoeff <- function(n, nprime, offs, rtn) {
 //  p <- length(nprime)
@@ -28,10 +27,10 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-NumericMatrix C_InterpCoeff(NumericVector n, NumericVector nprime, NumericVector offs, CharacterVector rtn) {
+NumericMatrix c_InterpCoeff(NumericVector n, NumericVector nprime, NumericVector offs, CharacterVector rtn) {
   
   Environment pkg = Environment::namespace_env("alignment");
-  Function C_histc = pkg["C_histc"];
+  Function c_histc = pkg["c_histc"];
   int p = nprime.length();
   int q = n[0] - 1;
   NumericMatrix coeff( p, n[0] ); 
@@ -41,7 +40,7 @@ NumericMatrix C_InterpCoeff(NumericVector n, NumericVector nprime, NumericVector
     IntegerVector pp = seq(1, nprime[i]);
     IntegerVector p2 = seq(0, q) ;
     NumericVector p3 = as<NumericVector>(p2) * (nprime[i] - 1)/q + 1; 
-    NumericVector k  = C_histc(p3, pp);
+    NumericVector k  = c_histc(p3, pp);
     for(int j = 0; j < k.size(); ++j) {
       if(p3[j] >= nprime[i]){
         k[j] =nprime[i]-1;
@@ -61,10 +60,6 @@ NumericMatrix C_InterpCoeff(NumericVector n, NumericVector nprime, NumericVector
   }
 
 }
-
-// C version of InterCoeff... in R  
-// could improve/tidy this a lot but *think* it works!!!!
-// hurts my head thinking about this...
 
 // /*** R
 // this this should generate 

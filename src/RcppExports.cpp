@@ -13,24 +13,24 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// C_InterpCoeff
-NumericMatrix C_InterpCoeff(NumericVector n, NumericVector nprime, NumericVector offs, CharacterVector rtn);
-static SEXP _alignment_C_InterpCoeff_try(SEXP nSEXP, SEXP nprimeSEXP, SEXP offsSEXP, SEXP rtnSEXP) {
+// c_InterpCoeff
+NumericMatrix c_InterpCoeff(NumericVector n, NumericVector nprime, NumericVector offs, CharacterVector rtn);
+static SEXP _alignment_c_InterpCoeff_try(SEXP nSEXP, SEXP nprimeSEXP, SEXP offsSEXP, SEXP rtnSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< NumericVector >::type n(nSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type nprime(nprimeSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type offs(offsSEXP);
     Rcpp::traits::input_parameter< CharacterVector >::type rtn(rtnSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_InterpCoeff(n, nprime, offs, rtn));
+    rcpp_result_gen = Rcpp::wrap(c_InterpCoeff(n, nprime, offs, rtn));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _alignment_C_InterpCoeff(SEXP nSEXP, SEXP nprimeSEXP, SEXP offsSEXP, SEXP rtnSEXP) {
+RcppExport SEXP _alignment_c_InterpCoeff(SEXP nSEXP, SEXP nprimeSEXP, SEXP offsSEXP, SEXP rtnSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_alignment_C_InterpCoeff_try(nSEXP, nprimeSEXP, offsSEXP, rtnSEXP));
+        rcpp_result_gen = PROTECT(_alignment_c_InterpCoeff_try(nSEXP, nprimeSEXP, offsSEXP, rtnSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -50,9 +50,9 @@ RcppExport SEXP _alignment_C_InterpCoeff(SEXP nSEXP, SEXP nprimeSEXP, SEXP offsS
     UNPROTECT(1);
     return rcpp_result_gen;
 }
-// C_cow
-List C_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector Slack, NumericVector Options);
-static SEXP _alignment_C_cow_try(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP SlackSEXP, SEXP OptionsSEXP) {
+// c_cow
+List c_cow(NumericVector Ta, NumericVector X, NumericVector Seg, NumericVector Slack, NumericVector Options);
+static SEXP _alignment_c_cow_try(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP SlackSEXP, SEXP OptionsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< NumericVector >::type Ta(TaSEXP);
@@ -60,15 +60,15 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type Seg(SegSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type Slack(SlackSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type Options(OptionsSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_cow(Ta, X, Seg, Slack, Options));
+    rcpp_result_gen = Rcpp::wrap(c_cow(Ta, X, Seg, Slack, Options));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _alignment_C_cow(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP SlackSEXP, SEXP OptionsSEXP) {
+RcppExport SEXP _alignment_c_cow(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP SlackSEXP, SEXP OptionsSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_alignment_C_cow_try(TaSEXP, XSEXP, SegSEXP, SlackSEXP, OptionsSEXP));
+        rcpp_result_gen = PROTECT(_alignment_c_cow_try(TaSEXP, XSEXP, SegSEXP, SlackSEXP, OptionsSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -88,9 +88,9 @@ RcppExport SEXP _alignment_C_cow(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP Sla
     UNPROTECT(1);
     return rcpp_result_gen;
 }
-// C_cow2
-List C_cow2(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options);
-static SEXP _alignment_C_cow2_try(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP SlackSEXP, SEXP OptionsSEXP) {
+// c_cow2
+List c_cow2(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options);
+static SEXP _alignment_c_cow2_try(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP SlackSEXP, SEXP OptionsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< NumericVector >::type Ta(TaSEXP);
@@ -98,15 +98,15 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type Seg(SegSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type Slack(SlackSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type Options(OptionsSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_cow2(Ta, X, Seg, Slack, Options));
+    rcpp_result_gen = Rcpp::wrap(c_cow2(Ta, X, Seg, Slack, Options));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _alignment_C_cow2(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP SlackSEXP, SEXP OptionsSEXP) {
+RcppExport SEXP _alignment_c_cow2(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP SlackSEXP, SEXP OptionsSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_alignment_C_cow2_try(TaSEXP, XSEXP, SegSEXP, SlackSEXP, OptionsSEXP));
+        rcpp_result_gen = PROTECT(_alignment_c_cow2_try(TaSEXP, XSEXP, SegSEXP, SlackSEXP, OptionsSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -126,22 +126,60 @@ RcppExport SEXP _alignment_C_cow2(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP Sl
     UNPROTECT(1);
     return rcpp_result_gen;
 }
-// C_histc
-NumericVector C_histc(NumericVector values, NumericVector edges);
-static SEXP _alignment_C_histc_try(SEXP valuesSEXP, SEXP edgesSEXP) {
+// c_cow3
+List c_cow3(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options);
+static SEXP _alignment_c_cow3_try(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP SlackSEXP, SEXP OptionsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type Ta(TaSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Seg(SegSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Slack(SlackSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Options(OptionsSEXP);
+    rcpp_result_gen = Rcpp::wrap(c_cow3(Ta, X, Seg, Slack, Options));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _alignment_c_cow3(SEXP TaSEXP, SEXP XSEXP, SEXP SegSEXP, SEXP SlackSEXP, SEXP OptionsSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_alignment_c_cow3_try(TaSEXP, XSEXP, SegSEXP, SlackSEXP, OptionsSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error("%s", CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// c_histc
+NumericVector c_histc(NumericVector values, NumericVector edges);
+static SEXP _alignment_c_histc_try(SEXP valuesSEXP, SEXP edgesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< NumericVector >::type values(valuesSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type edges(edgesSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_histc(values, edges));
+    rcpp_result_gen = Rcpp::wrap(c_histc(values, edges));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _alignment_C_histc(SEXP valuesSEXP, SEXP edgesSEXP) {
+RcppExport SEXP _alignment_c_histc(SEXP valuesSEXP, SEXP edgesSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_alignment_C_histc_try(valuesSEXP, edgesSEXP));
+        rcpp_result_gen = PROTECT(_alignment_c_histc_try(valuesSEXP, edgesSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -161,22 +199,22 @@ RcppExport SEXP _alignment_C_histc(SEXP valuesSEXP, SEXP edgesSEXP) {
     UNPROTECT(1);
     return rcpp_result_gen;
 }
-// C_ylagxCOR
-NumericVector C_ylagxCOR(NumericVector x, NumericVector y);
-static SEXP _alignment_C_ylagxCOR_try(SEXP xSEXP, SEXP ySEXP) {
+// c_ylagxCOR
+NumericVector c_ylagxCOR(NumericVector x, NumericVector y);
+static SEXP _alignment_c_ylagxCOR_try(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
-    rcpp_result_gen = Rcpp::wrap(C_ylagxCOR(x, y));
+    rcpp_result_gen = Rcpp::wrap(c_ylagxCOR(x, y));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _alignment_C_ylagxCOR(SEXP xSEXP, SEXP ySEXP) {
+RcppExport SEXP _alignment_c_ylagxCOR(SEXP xSEXP, SEXP ySEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_alignment_C_ylagxCOR_try(xSEXP, ySEXP));
+        rcpp_result_gen = PROTECT(_alignment_c_ylagxCOR_try(xSEXP, ySEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -201,32 +239,35 @@ RcppExport SEXP _alignment_C_ylagxCOR(SEXP xSEXP, SEXP ySEXP) {
 static int _alignment_RcppExport_validate(const char* sig) { 
     static std::set<std::string> signatures;
     if (signatures.empty()) {
-        signatures.insert("NumericMatrix(*C_InterpCoeff)(NumericVector,NumericVector,NumericVector,CharacterVector)");
-        signatures.insert("List(*C_cow)(NumericVector,NumericVector,NumericVector,NumericVector,NumericVector)");
-        signatures.insert("List(*C_cow2)(NumericVector,NumericMatrix,NumericVector,NumericVector,NumericVector)");
-        signatures.insert("NumericVector(*C_histc)(NumericVector,NumericVector)");
-        signatures.insert("NumericVector(*C_ylagxCOR)(NumericVector,NumericVector)");
+        signatures.insert("NumericMatrix(*c_InterpCoeff)(NumericVector,NumericVector,NumericVector,CharacterVector)");
+        signatures.insert("List(*c_cow)(NumericVector,NumericVector,NumericVector,NumericVector,NumericVector)");
+        signatures.insert("List(*c_cow2)(NumericVector,NumericMatrix,NumericVector,NumericVector,NumericVector)");
+        signatures.insert("List(*c_cow3)(NumericVector,NumericMatrix,NumericVector,NumericVector,NumericVector)");
+        signatures.insert("NumericVector(*c_histc)(NumericVector,NumericVector)");
+        signatures.insert("NumericVector(*c_ylagxCOR)(NumericVector,NumericVector)");
     }
     return signatures.find(sig) != signatures.end();
 }
 
 // registerCCallable (register entry points for exported C++ functions)
 RcppExport SEXP _alignment_RcppExport_registerCCallable() { 
-    R_RegisterCCallable("alignment", "_alignment_C_InterpCoeff", (DL_FUNC)_alignment_C_InterpCoeff_try);
-    R_RegisterCCallable("alignment", "_alignment_C_cow", (DL_FUNC)_alignment_C_cow_try);
-    R_RegisterCCallable("alignment", "_alignment_C_cow2", (DL_FUNC)_alignment_C_cow2_try);
-    R_RegisterCCallable("alignment", "_alignment_C_histc", (DL_FUNC)_alignment_C_histc_try);
-    R_RegisterCCallable("alignment", "_alignment_C_ylagxCOR", (DL_FUNC)_alignment_C_ylagxCOR_try);
+    R_RegisterCCallable("alignment", "_alignment_c_InterpCoeff", (DL_FUNC)_alignment_c_InterpCoeff_try);
+    R_RegisterCCallable("alignment", "_alignment_c_cow", (DL_FUNC)_alignment_c_cow_try);
+    R_RegisterCCallable("alignment", "_alignment_c_cow2", (DL_FUNC)_alignment_c_cow2_try);
+    R_RegisterCCallable("alignment", "_alignment_c_cow3", (DL_FUNC)_alignment_c_cow3_try);
+    R_RegisterCCallable("alignment", "_alignment_c_histc", (DL_FUNC)_alignment_c_histc_try);
+    R_RegisterCCallable("alignment", "_alignment_c_ylagxCOR", (DL_FUNC)_alignment_c_ylagxCOR_try);
     R_RegisterCCallable("alignment", "_alignment_RcppExport_validate", (DL_FUNC)_alignment_RcppExport_validate);
     return R_NilValue;
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_alignment_C_InterpCoeff", (DL_FUNC) &_alignment_C_InterpCoeff, 4},
-    {"_alignment_C_cow", (DL_FUNC) &_alignment_C_cow, 5},
-    {"_alignment_C_cow2", (DL_FUNC) &_alignment_C_cow2, 5},
-    {"_alignment_C_histc", (DL_FUNC) &_alignment_C_histc, 2},
-    {"_alignment_C_ylagxCOR", (DL_FUNC) &_alignment_C_ylagxCOR, 2},
+    {"_alignment_c_InterpCoeff", (DL_FUNC) &_alignment_c_InterpCoeff, 4},
+    {"_alignment_c_cow", (DL_FUNC) &_alignment_c_cow, 5},
+    {"_alignment_c_cow2", (DL_FUNC) &_alignment_c_cow2, 5},
+    {"_alignment_c_cow3", (DL_FUNC) &_alignment_c_cow3, 5},
+    {"_alignment_c_histc", (DL_FUNC) &_alignment_c_histc, 2},
+    {"_alignment_c_ylagxCOR", (DL_FUNC) &_alignment_c_ylagxCOR, 2},
     {"_alignment_RcppExport_registerCCallable", (DL_FUNC) &_alignment_RcppExport_registerCCallable, 0},
     {NULL, NULL, 0}
 };

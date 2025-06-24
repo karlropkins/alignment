@@ -29,7 +29,7 @@ cow <- function(Ta, X, Seg, Slack, Options) {
   
   # Initialise
   if(is.matrix(X)){
-    dimX <-   length(X)  #  dimX   : Number of signals thar are to be aligned
+    dimX <-   length(X)  #  dimX   : Number of signals that are to be aligned
   } else {
     dimX <- c(1, length(X))
   }

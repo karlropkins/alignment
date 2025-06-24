@@ -22,7 +22,7 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-List c_cow2(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
+List c_cow3(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector Slack, NumericVector Options) {
   
   // setup
   NumericVector dimX = X.attr("dim");
@@ -91,6 +91,7 @@ List c_cow2(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector 
   }
   
   NumericMatrix Xwarped(dimX[0], dimX[1]);  // Initialise matrix of warped signals
+  std::fill(Xwarped.begin(), Xwarped.end(), NumericVector::get_na()); 
   NumericVector X0 = X(0,_);  // this is the first column of the supplied matrix
   
   NumericVector bT(nSeg[0]+1);
@@ -126,7 +127,7 @@ List c_cow2(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector 
   //I simplified next bit...
   //IntegerVector Bounds_ind = seq(0, nSeg[0] ); // don't need to use
   // TO LOOK AT 
-  // Can I drop Bounds_a and Bounds_b and work striaght into Bounds
+  // Can I drop Bounds_a and Bounds_b and work straight into Bounds
   //    would drop two matrices...
   NumericMatrix Bounds_a(2, offs_tmp.size()); 
   for(int i=0; i<offs_tmp.length(); ++i){
@@ -171,6 +172,9 @@ List c_cow2(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector 
   
   if(Seg.length()  == 1){
     // supplied seg length 1
+    // if I added function code here I would only have to run it half number of times...
+    //      rather than once for coeff and once for index
+    //      so it would go in three times but it would be C_InterpCoeff(C_histc())
     for(int i=0; i < nSeg[0]-1; ++i){
       Int_Coeff[i] = c_InterpCoeff(len_segs(0, 0) +1, len_segs(1, 0) + Slacks_vec + 1, Slacks_vec, "coeff");
       Int_Index[i] = c_InterpCoeff(len_segs(0, 0) +1, len_segs(1, 0) + Slacks_vec + 1, Slacks_vec, "index");
@@ -233,6 +237,7 @@ List c_cow2(NumericVector Ta, NumericMatrix X, NumericVector Seg, NumericVector 
     int node_z = table_index(i + 2);
     int node_a = table_index(i + 1) + 1;
     NumericMatrix bound_k_table(2, node_z - node_a + 1); // these are not NAs...
+    std::fill(bound_k_table.begin(), bound_k_table.end(), NumericVector::get_na());
     // this should be simpler ???
     // R * int_index_seg <- t(Int_Index[[i]]) - (len_segs[2, i] +1)
     NumericMatrix int_index_tmp = Int_Index[i];
